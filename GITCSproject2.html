@@ -60,7 +60,7 @@
     }
 
     .search-box input {
-      padding: 10px;
+      padding: 5px;
       width: 50%;
       max-width: 400px;
       border: 1px solid #ccc;
@@ -72,7 +72,7 @@
       background-color: hsl(203, 55%, 64%);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
     }
 
@@ -199,9 +199,20 @@
     .close:hover {
       color: black;
     }
-  </style>
+
+    .input_location_box{
+      margin:8px;
+      border-radius:px;
+    }
+    h1{
+      margin:7px;
+      padding: 6px;
+    }
+   </style>
 </head>
 <body>
+  
+
   <header>
     <div class="header-left">
       <a href="/">
@@ -221,8 +232,28 @@
   </header>
 
   <section class="search-area">
-    <h1>Find Local Businesses Near You</h1>
-    <div class="search-box">
+    <h1>Find Local Businesses Near </h1>
+        
+
+
+        
+       
+     
+       
+
+   
+     <div class="search-box">
+      
+       <select id="citySelect" style="padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; width: 180px;">
+        <option value="mumbai" selected="">Mumbai</option>
+        <option value="delhi">Delhi</option>
+        <option value="bangalore">Bangalore</option>
+        <option value="chennai">Chennai</option>
+        <option value="hyderabad">Hyderabad</option>
+        <option value="kolkata">Kolkata</option>
+      </select>
+
+ 
       <input type="text" id="searchInput" placeholder="Search for restaurants, salons, services..."/>
       <button onclick="search()">Search</button>
     </div>
@@ -348,5 +379,89 @@
       }
     };
   </script>
+  <script>
+  const cities = [
+    "Mumbai", "Delhi", "Bengaluru", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata",
+    "Pune", "Jaipur", "Surat", "Lucknow", "Nagpur", "Indore", "Patna", "Bhopal",
+    "Thane", "Vadodara", "Ghaziabad", "Agra", "Varanasi", "Ranchi", "Guwahati", "Amritsar", "Chandigarh"
+  ];
+
+  const input = document.getElementById("city-input");
+  const suggestionBox = document.getElementById("suggestions");
+
+  input.addEventListener("input", () => {
+    const val = input.value.toLowerCase();
+    suggestionBox.innerHTML = "";
+    if (val.length === 0) {
+      suggestionBox.style.display = "none";
+      return;
+    }
+
+    const filtered = cities.filter(city => city.toLowerCase().startsWith(val));
+    if (filtered.length === 0) {
+      suggestionBox.style.display = "none";
+      return;
+    }
+
+    filtered.forEach(city => {
+      const div = document.createElement("div");
+      div.setAttribute("role", "option");
+      div.textContent = city;
+      div.style.padding = "8px 10px";
+      div.style.cursor = "pointer";
+      div.addEventListener("click", () => {
+        input.value = city;
+        suggestionBox.innerHTML = "";
+        suggestionBox.style.display = "none";
+      });
+      suggestionBox.appendChild(div);
+    });
+
+    suggestionBox.style.display = "block";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest('.input_location_box')) {
+      suggestionBox.innerHTML = "";
+      suggestionBox.style.display = "none";
+    }
+  });
+</script>
+
+  <section class="search-area" style="text-align: center; padding: 40px;">
+  <h1 style="font-size: 26px; margin-bottom: 20px;">
+    Search across <span style="color: #000; font-weight: bold;">‘4.7 Crore+’</span> <span style="color: #007bff; font-weight: bold;">Businesses</span>
+  </h1>
+  
+  <div class="search-box" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+    
+    <!-- City Selection (styled like Justdial) -->
+    <div style="position: relative;">
+      <span style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); font-size: 16px;">📍</span>
+      <select id="citySelect"
+        style="padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; width: 180px;">
+        <option value="mumbai" selected>Mumbai</option>
+        <option value="delhi">Delhi</option>
+        <option value="bangalore">Bangalore</option>
+        <option value="chennai">Chennai</option>
+        <option value="hyderabad">Hyderabad</option>
+        <option value="kolkata">Kolkata</option>
+      </select>
+    </div>
+
+    <!-- Search Bar -->
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search for Spa & Salons"
+      style="padding: 10px; font-size: 16px; width: 280px; border-radius: 6px; border: 1px solid #ccc;" />
+
+    <!-- Search Button -->
+    <button onclick="search()" style="padding: 10px 16px; font-size: 16px; background-color: orange; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      🔍
+    </button>
+  </div>
+</section>
+
 </body>
 </html>
